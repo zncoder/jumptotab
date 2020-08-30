@@ -9,6 +9,7 @@ body {
 		box-sizing: border-box;
 		padding: 10px 0 20px 0;
 		margin-left: 1em;
+		margin-top: 2em;
 }
 
 .leftcol {
@@ -30,13 +31,33 @@ li {
 
 a {
 		text-decoration: none;
+		color: black;
+}
+ 
+.matched {
+		background: gold;
 }
 
-hr {
-		width: 10%;
-		text-align: left;
-		margin-left: 0;
-		height: 1px;
-		border-width: 0;
-		background-color:antiquewhite;
+#banner {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+    z-index: 2;
+    font-size: 0.9em;
+    background-color: ghostwhite;
+    width: 100%;
+    padding: 0;
+    letter-spacing: 1px;
+		display: flex;
+}
+
+#banner label {
+		margin: 4px;
+		font-size: 0.8em;
+		flex: 1;
+}
+
+#search {
+		flex: 6;
+		font-size: 1em;
 }
