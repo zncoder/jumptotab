@@ -10,6 +10,10 @@ function currentWin() {
   return new Promise(resolve => chrome.windows.getCurrent({}, win => { resolve(win) }))
 }
 
+function currentTab() {
+  return new Promise(resolve => chrome.tabs.getCurrent(tab => { resolve(tab) }))
+}
+
 async function gotoTab(el) {
   let tid = parseInt(el.target.id.substring(1))
   let tab = await getTab(tid)
@@ -18,9 +22,11 @@ async function gotoTab(el) {
     chrome.windows.update(tab.windowId, {focused: true})
   }
   chrome.tabs.update(tab.id, {active: true})
+  let cur = await currentTab()
+  chrome.tabs.remove(cur.id)
 }
 
-async function build() {
+async function getAllTabs() {
   let tabs = await queryTabs()
   let cw = await currentWin()
   tabs.sort((a, b) => {
@@ -34,25 +40,25 @@ async function build() {
       return a.windowId - b.windowId
     }
   })
+  return tabs
+}
 
-  let s = ""
-  let w = -1
-  for (let tab of tabs) {
-    let id = tab.id
-    let title = tab.title
-    if (tab.windowId !== w) {
-      if (w !== -1) {
-        s += `<li><hr></li>\n`
-      }
-      w = tab.windowId
-    }
-    s += `<li><a id="t${id}" href="#">${title}</a></li>\n` 
+async function render() {
+  function tabToLi(tab, i) {
+    let li = document.createElement("li")
+    li.innerHTML = `<a id="t${tab.id}" href="#">${i+1}. ${tab.title}</a>`
+    li.querySelector(`#t${tab.id}`).addEventListener("click", gotoTab)
+    return li
   }
-  document.querySelector("#menubox").innerHTML = s
-  for (let tab of tabs) {
-    let id = tab.id
-    document.querySelector(`#t${id}`).addEventListener("click", gotoTab)
+
+  let tabs = await getAllTabs()
+  let left = document.querySelector("#left")
+  let right = document.querySelector("#right")
+  for (let i = 0, half = parseInt((tabs.length+1)/2); i < tabs.length; i++) {
+    let li = tabToLi(tabs[i], i)
+    let div = i < half ? left : right
+    div.appendChild(li)
   }
 }
 
-build()
+render()

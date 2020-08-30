@@ -1,6 +1,18 @@
 body {
-		width: 500px;
-		font-size: 0.9em;
+		font-size: 1em;
+}
+
+.column {
+		display: inline-block;
+		width: 45%;
+		vertical-align: top;
+		box-sizing: border-box;
+		padding: 10px 0 20px 0;
+		margin-left: 1em;
+}
+
+.leftcol {
+		margin-left: 3em;
 }
 
 ul {
@@ -9,11 +21,11 @@ ul {
 }
 
 ul li:nth-child(2n-1) {
-		background: antiquewhite;
+		background: ghostwhite;
 }
 
 li {
-		padding: 4px;
+		padding: 6px;
 }
 
 a {
