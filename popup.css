@@ -1,0 +1,30 @@
+body {
+		width: 500px;
+		font-size: 0.9em;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li:nth-child(2n-1) {
+		background: antiquewhite;
+}
+
+li {
+		padding: 4px;
+}
+
+a {
+		text-decoration: none;
+}
+
+hr {
+		width: 10%;
+		text-align: left;
+		margin-left: 0;
+		height: 1px;
+		border-width: 0;
+		background-color:antiquewhite;
+}

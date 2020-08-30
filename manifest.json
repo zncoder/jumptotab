@@ -1,0 +1,16 @@
+{
+  "name": "TabMenu",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "List tabs in toolbar popup",
+  "icons": {
+    "48": "48.png"
+  },
+	"permissions": [ "tabs" ],
+	"browser_action": {
+		"browser_style": true,
+		"default_icon": "32.png",
+		"default_popup": "popup.html",
+		"default_title": "List tabs"
+	}
+}
