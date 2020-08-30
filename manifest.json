@@ -1,8 +1,8 @@
 {
-  "name": "TabMenu",
+  "name": "JumpToTab",
   "version": "1.2.0",
   "manifest_version": 2,
-  "description": "List tabs",
+  "description": "List tabs in a page and jump to a tab",
   "icons": {
     "48": "48.png"
   },
