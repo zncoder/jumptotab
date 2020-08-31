@@ -43,13 +43,34 @@ async function getAllTabs() {
   return tabs
 }
 
+async function newTab() {
+  let wins = await new Promise(r => {
+    chrome.windows.getAll({windowTypes: ["normal"]}, wins => r(wins))
+  })
+  let cw = await currentWin()
+  for (let w of wins) {
+    if (w.id !== cw.id) {
+      chrome.windows.update(w.id, {focused: true})
+      chrome.tabs.create({windowId: w.id})
+      let cur = await currentTab()
+      chrome.tabs.remove(cur.id)
+      return
+    }
+  }
+  chrome.tabs.create({})
+}
+
 function searchTab(ev) {
+  let kws = ev.target.value.toLocaleLowerCase().split(/ +/).filter(w => w.length > 0)
   if (ev.key === "Enter") {
+    if (kws.length === 0) {
+      newTab()
+      return
+    }
     selectFirstMatchedTab()
     return
   }
 
-  let kws = ev.target.value.toLocaleLowerCase().split(/ +/).filter(w => w.length > 0)
   let links = document.querySelectorAll("a")
   let matched = 0
   for (let ln of links) {
