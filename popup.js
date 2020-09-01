@@ -28,16 +28,18 @@ async function gotoTab(el) {
 
 async function getAllTabs() {
   let tabs = await queryTabs()
-  let cw = await currentWin()
+  let ct = await currentTab()
+  tabs = tabs.filter(t => t.id !== ct.id)
+
   tabs.sort((a, b) => {
-    if (a.windowId === b.windowId) {
-      return a.index - b.index
-    } else if (a.windowId === cw.id) {
+    let r = a.title.toUpperCase()
+    let s = b.title.toUpperCase()
+    if (r < s) {
       return -1
-    } else if (b.windowId === cw.id) {
-      return 1
+    } else if (r === s) {
+      return 0
     } else {
-      return a.windowId - b.windowId
+      return 1
     }
   })
   return tabs
@@ -61,7 +63,7 @@ async function newTab() {
 }
 
 function searchTab(ev) {
-  let kws = ev.target.value.toLocaleLowerCase().split(/ +/).filter(w => w.length > 0)
+  let kws = ev.target.value.toUpperCase().split(/ +/).filter(w => w.length > 0)
   if (ev.key === "Enter") {
     if (kws.length === 0) {
       newTab()
@@ -74,7 +76,7 @@ function searchTab(ev) {
   let links = document.querySelectorAll("a")
   let matched = 0
   for (let ln of links) {
-    let title = ln.innerText.toLocaleLowerCase()
+    let title = ln.innerText.toUpperCase()
     let all = kws.length > 0
     for (let kw of kws) {
       if (title.indexOf(kw) < 0) {
