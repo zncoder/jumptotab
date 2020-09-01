@@ -7,11 +7,17 @@ function getTab(tid) {
 }
 
 function currentWin() {
-  return new Promise(resolve => chrome.windows.getCurrent({}, win => { resolve(win) }))
+  return new Promise(resolve => chrome.windows.getCurrent({populate: true}, win => { resolve(win) }))
 }
 
 function currentTab() {
   return new Promise(resolve => chrome.tabs.getCurrent(tab => { resolve(tab) }))
+}
+
+function allWins() {
+  return new Promise(r => {
+    chrome.windows.getAll({windowTypes: ["normal"], populate: true}, wins => r(wins))
+  })
 }
 
 async function gotoTab(el) {
@@ -46,20 +52,26 @@ async function getAllTabs() {
 }
 
 async function newTab() {
-  let wins = await new Promise(r => {
-    chrome.windows.getAll({windowTypes: ["normal"]}, wins => r(wins))
-  })
-  let cw = await currentWin()
-  for (let w of wins) {
-    if (w.id !== cw.id) {
-      chrome.windows.update(w.id, {focused: true})
-      chrome.tabs.create({windowId: w.id})
-      let cur = await currentTab()
-      chrome.tabs.remove(cur.id)
-      return
+  let cur = await currentTab(),
+      cw = await currentWin(),
+      targetw
+  if (cw.tabs.length === 1) {
+    // extension tab is the only tab, open a tab in another window
+    let wins = await allWins()
+    for (let w of wins) {
+      if (w.id !== cw.id) {
+        targetw = w
+        break
+      }
     }
   }
-  chrome.tabs.create({})
+  if (targetw) {
+    chrome.windows.update(targetw.id, {focused: true})
+  } else {
+    targetw = cw
+  }
+  chrome.tabs.create({windowId: targetw.id})
+  chrome.tabs.remove(cur.id)
 }
 
 function searchTab(ev) {
