@@ -77,10 +77,6 @@ async function newTab() {
 function searchTab(ev) {
   let kws = ev.target.value.toUpperCase().split(/ +/).filter(w => w.length > 0)
   if (ev.key === "Enter") {
-    if (kws.length === 0) {
-      newTab()
-      return
-    }
     selectFirstMatchedTab()
     return
   }
@@ -112,6 +108,9 @@ function selectFirstMatchedTab() {
   let matched = document.querySelector(".matched")
   if (matched) {
     gotoTab(matched)
+  } else {
+    // open a new tab if none is matched
+    newTab()
   }
 }
 
