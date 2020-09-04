@@ -1,5 +1,5 @@
 body {
-		font-size: 1em;
+		font-size: 0.9em;
 }
 
 .column {
@@ -19,6 +19,7 @@ body {
 ul {
     list-style: none;
     padding-left: 0;
+		overflow: hidden;
 }
 
 ul li:nth-child(2n-1) {
@@ -27,6 +28,7 @@ ul li:nth-child(2n-1) {
 
 li {
 		padding: 6px;
+		white-space: nowrap;
 }
 
 a {
@@ -43,7 +45,7 @@ a {
 		top: 0px;
 		left: 0px;
     z-index: 2;
-    font-size: 0.9em;
+    font-size: 1.1em;
     background-color: ghostwhite;
     width: 100%;
     padding: 0;
@@ -60,4 +62,11 @@ a {
 #search {
 		flex: 6;
 		font-size: 1em;
+}
+
+.favicon {
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+		margin: 0 0.5em 0 0;
 }

@@ -115,9 +115,24 @@ function selectFirstMatchedTab() {
 }
 
 async function render() {
+  function favicon(tab) {
+    let a = document.createElement("a")
+    a.href = tab.url
+    if (!a.protocol.startsWith("http")) {
+      return `<img class="favicon" alt="">`
+    }
+    let src = `${a.protocol}//${a.host}/favicon.ico`
+    switch (a.host) {
+    case "calendar.google.com":
+      src = "https://calendar.google.com/googlecalendar/images/favicon_v2018_256.png"
+      break
+    }
+    return `<img class="favicon" src="${src}" alt="">`
+  }
+  
   function tabToLi(tab, i) {
     let li = document.createElement("li")
-    li.innerHTML = `<a id="t${tab.id}" href="#">${i+1}. ${tab.title}</a>`
+    li.innerHTML = `<a id="t${tab.id}" href="#">${favicon(tab)} ${i+1}. ${tab.title}</a>`
     li.querySelector(`#t${tab.id}`).addEventListener("click", ev => gotoTab(ev.target))
     return li
   }
