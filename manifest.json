@@ -1,14 +1,13 @@
 {
   "name": "JumpToTab",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "manifest_version": 2,
   "description": "List tabs in a page and jump to a tab",
   "icons": {
     "48": "48.png"
   },
 	"permissions": [
-		"tabs",
-		"https://cdn.jsdelivr.net/npm/vue@2.6.12"
+		"tabs"
 	],
 	"content_security_policy": "script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; object-src 'self'",
   "background": {
