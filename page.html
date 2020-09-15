@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>Tabs</title>
+    <meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="page.css">
+  </head>
+
+	<body>
+		<div id="app">
+			<div id="header">
+				<span class="hdr-span">Search: [{{matched > 0 ? matched+"/" : ""}}{{total}}] </span>
+				<input
+					ref="searchbox"
+					class="hdr-box"
+					autocomplete="off"
+					placeholder="Type words to search tab or enter to open a new tab"
+					v-model="searchWords"
+					@keyup="matchTabs"
+					@keyup.enter="selectTab" />
+				<span class="hdr-span"></span>
+			</div>
+			<template v-for="(col, index) in columns">
+				<div
+					class="column"
+					:class="[col.cls]">
+					<ul>
+						<li v-for="ti in col.tabsInfo" :key="ti.id">
+							<a
+								:id="ti.id"
+								:class="{matched: ti.matched}"
+								@click="gotoTab(ti)"
+								href="#">
+								<img class="favicon" :src="ti.favicon" alt=""> {{ti.title}}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</template>
+		</div>
+	</body>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script src="page.js"></script>
+</html>
