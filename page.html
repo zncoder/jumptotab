@@ -28,6 +28,7 @@
 						<li v-for="ti in col.tabsInfo" :key="ti.id">
 							<a
 								:id="ti.id"
+								class="tab-link"
 								:class="{matched: ti.matched, removed: ti.removed}"
 								@click="gotoTab(ti)"
 								href="#">
