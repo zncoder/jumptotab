@@ -35,9 +35,17 @@ a {
 		text-decoration: none;
 		color: black;
 }
+
+.removelink {
+		float: right;
+}
  
 .matched {
 		background: gold;
+}
+
+.removed {
+		text-decoration: line-through;
 }
 
 #header {

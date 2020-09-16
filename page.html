@@ -28,11 +28,12 @@
 						<li v-for="ti in col.tabsInfo" :key="ti.id">
 							<a
 								:id="ti.id"
-								:class="{matched: ti.matched}"
+								:class="{matched: ti.matched, removed: ti.removed}"
 								@click="gotoTab(ti)"
 								href="#">
 								<img class="favicon" :src="ti.favicon" alt=""> {{ti.title}}
 							</a>
+							<a class="removelink" href="#" @click="removeTab(ti)">⨯</a>
 						</li>
 					</ul>
 				</div>
