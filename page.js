@@ -91,7 +91,7 @@ async function _newTab() {
   let cur = await _currentTab(),
       cw = await _currentWin(),
       targetw
-  if (cw.tabsInfo.length === 1) {
+  if (cw.tabs.length === 1) {
     // extension tab is the only tab, open a tab in another window
     let wins = await _allWins()
     for (let w of wins) {
